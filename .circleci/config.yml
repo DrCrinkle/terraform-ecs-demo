@@ -9,7 +9,7 @@ jobs:
     steps:
       - run:
          command: |
-            apt install git
+            apt update && apt install git
             git submodule update --init --recursive
 workflows:
   build_and_push_image:
