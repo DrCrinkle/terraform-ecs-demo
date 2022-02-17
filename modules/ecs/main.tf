@@ -52,15 +52,15 @@ resource "aws_iam_instance_profile" "ecs_role" {
 }
 
 resource "aws_ecs_task_definition" "service" {
-  family = "taylor"
+  family = "taylor-service"
   network_mode = "bridge"
   requires_compatibilities = ["EC2"]
   task_role_arn = aws_iam_role.ecsTaskExecution_role.arn
   execution_role_arn = aws_iam_role.ecsTaskExecution_role.arn
   container_definitions = jsonencode([
     {
-      name      = "first"
-      image     = "450183644535.dkr.ecr.us-east-2.amazonaws.com/taylor:fd0c4a6db27ed1149508ecb285f18346a5859300"
+      name      = "taylor-service"
+      image     = "450183644535.dkr.ecr.us-east-2.amazonaws.com/taylor:latest"
       cpu       = 200
       memory    = 200
       essential = true
@@ -83,7 +83,7 @@ resource "aws_ecs_service" "worker" {
   iam_role        = "arn:aws:iam::450183644535:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
   load_balancer {
       target_group_arn = var.target_group
-      container_name = "first"
+      container_name = "taylor-service"
       container_port = 80
   }
 }
