@@ -7,8 +7,10 @@ jobs:
     docker:
       - image: ubuntu:latest
     steps:
-      - run: sudo apt install git
-        run: git submodule update --init --recursive
+      - run:
+         command: |
+            sudo apt install git
+            git submodule update --init --recursive
 workflows:
   build_and_push_image:
     jobs:
