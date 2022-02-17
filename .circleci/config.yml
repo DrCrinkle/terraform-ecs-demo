@@ -7,12 +7,15 @@ jobs:
     docker:
       - image: ubuntu:latest
     steps:
-     - run: git submodule update --init --recursive
+      - run: sudo apt install git
+        run: git submodule update --init --recursive
 workflows:
   build_and_push_image:
     jobs:
       - submodules
       - aws-ecr/build-and-push-image:
+          requires:
+            - submodules
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
           tag: "${CIRCLE_SHA1}"
           path: ./react-wordle/
