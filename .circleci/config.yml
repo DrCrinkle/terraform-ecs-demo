@@ -2,10 +2,8 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@7.3.0
   aws-ecs: circleci/aws-ecs@2.2.1
+run: git submodule update --init --recursive
 workflows:
-  jobs:
-    - submodule:
-        command: git submodule update --init --recursive
   build_and_push_image:
     jobs:
       - aws-ecr/build-and-push-image:
