@@ -2,10 +2,16 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@7.3.0
   aws-ecs: circleci/aws-ecs@2.2.1
-run: git submodule update --init --recursive
+jobs:
+  submodules:
+    docker:
+      - image: ubuntu:latest
+    steps:
+     - run: git submodule update --init --recursive
 workflows:
   build_and_push_image:
     jobs:
+      - submodules
       - aws-ecr/build-and-push-image:
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
           tag: "${CIRCLE_SHA1}"
