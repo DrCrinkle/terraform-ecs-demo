@@ -5,6 +5,8 @@ orbs:
 workflows:
   build_and_push_image:
     jobs:
+      - submodule:
+          command: git submodule update --init --recursive
       - aws-ecr/build-and-push-image:
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
           tag: "${CIRCLE_SHA1}"
