@@ -60,7 +60,7 @@ resource "aws_ecs_task_definition" "service" {
   container_definitions = jsonencode([
     {
       name      = "first"
-      image     = "450183644535.dkr.ecr.us-east-2.amazonaws.com/taylor:latest"
+      image     = "450183644535.dkr.ecr.us-east-2.amazonaws.com/taylor:fd0c4a6db27ed1149508ecb285f18346a5859300"
       cpu       = 200
       memory    = 200
       essential = true
@@ -76,7 +76,7 @@ resource "aws_ecs_task_definition" "service" {
 }
 
 resource "aws_ecs_service" "worker" {
-  name            = "worker"
+  name            = "taylor-service"
   cluster         = aws_ecs_cluster.foo.id
   task_definition = aws_ecs_task_definition.service.arn
   desired_count   = var.desired
